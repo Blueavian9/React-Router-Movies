@@ -16,13 +16,17 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            Route path="Movie.js" element={<Movie.js />} />
-            Route path="MovieCard.js" element={<MovieCard.js />} />
-            Route path="MovieList.js" element={<MovieList.js />} />
+            <Route path="Movie.js" element={<Movie.js />} />
+            <Route path="MovieCard.js" element={<MovieCard.js />} />
+            <Route path="MovieList.js" element={<MovieList.js />} />
+            <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
-    )
+    );
 }
+
 // You'll need to wrap <App /> for routing to work
-ReactDOM.render(<App />, document.getElementById('root'));
+
+const root = ReactDOM.createRoot(
+root.render(<App />, document.getElementById('root')));
