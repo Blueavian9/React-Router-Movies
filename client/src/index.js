@@ -2,21 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Movie from './pages/Movie.js';
-import MovieCard from './pages/Movie.js';
-import MovieList from './pages/Movie.js';
+import MovieCard from './pages/MovieCard.js';
+import MovieList from './pages/MovieList.js';
 import SavedList from './pages/SavedList.js';
 import Server from './pages/server.js';
-import './index.css';
+import'./index.css';
 import App from './pages/App';
 
 
-export default App(); {
-  return (
+export default App(); { 
+    return (
     <div className="wrapper">
         <h1>App</h1>
-    </div>
-  );
-}
+
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -28,9 +26,9 @@ export default App(); {
         </Route>
       </Routes>
     </BrowserRouter>
+ </div>
   );
 }
 
 // You'll need to wrap <App /> for routing to work
-
 const root = ReactDOM.createRoot(root.render(<App />, document.getElementById('root')));
