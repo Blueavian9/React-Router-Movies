@@ -1,38 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Route } from 'react-router-dom';
-import MovieList from './Movies/MovieList';
+import React, { Component } from 'react';
+
 import SavedList from './Movies/SavedList';
+import MovieList from './Movies/MovieList';
 import Movie from './Movies/Movie';
 
-export default function App () {
-  const [movieList, setMovieList] = useState([]);
+import {Route} from 'react-router-dom';
 
-  useEffect(() => {
-    const getMovies = () => {
-      axios
-        .get('http://localhost:5001/api/movies') // Study this endpoint with Postman
-        .then(response => {
-          setMovieList(response.data);
-          // Study this response with a breakpoint or log statements
-          // and set the response data as the 'movieList' slice of state
-        })
-        .catch(error => {
-          console.error('Server Error', error);
-        });
-    }
-    getMovies();
-  }, []);
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      savedList: []
+    };
+  }
 
-  return (
-    <div>
-      <SavedList list={[ /* This is stretch */]} />
-      <Route exact path="/">
-        <MovieList movie={movieList} />  
-      </Route>
-      <Route path="/movies/:id">
-        <Movie />
-      </Route>
-    </div>
-  );
+  addToSavedList = movie => {
+    const savedList = this.state.savedList;
+    savedList.push(movie);
+    this.setState({ savedList });
+  };
+
+  render() {
+    return (
+      <div>
+        <SavedList list={this.state.savedList} />
+        <Route  exact path="/"  component={MovieList} ></ Route>
+        <Route path="/movies/:id"  component={Movie} ></ Route>
+      </div>
+    );
+  }
 }
