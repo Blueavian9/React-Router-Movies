@@ -1,69 +1,47 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import MovieCard from './MovieCard'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
-export default class Movie extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movie: null
-    };
-  }
+const Movie = ({ savedList, setSavedList, addToSavedList }) => {
+	const [movie, setMovie] = useState()
 
-  componentDidMount() {
-    // change this line to grab the id passed on the URL
-    // console.log(this.props)
-    const id = this.props.match.params.id ;
-    this.fetchMovie(id);
-  }
+	const { id } = useParams()
 
-  fetchMovie = id => {
-    axios
-      .get(`http://localhost:5001/api/movies/${id}`)
-      .then(response => {
-        this.setState(() => ({ movie: response.data }));
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-  // Uncomment this code when you're ready for the stretch problems
-  // componentWillReceiveProps(newProps){
-  //   if(this.props.match.params.id !== newProps.match.params.id){
-  //     this.fetchMovie(newProps.match.params.id);
-  //   }
-  // }
+	let deleteMovie = movieToRemove => {
+		setSavedList(savedList.filter(movie => movie.id !== movieToRemove.id))
+	}
 
-  // saveMovie = () => {
-  //   const addToSavedList = this.props.addToSavedList;
-  //   addToSavedList(this.state.movie)
-  // }
+	const saveMovie = movie => {
+		addToSavedList(movie)
+	}
 
-  render() {
-    if (!this.state.movie) {
-      return <div>Loading movie information...</div>;
-    }
+	useEffect(() => {
+		axios
+			.get(`http://localhost:5000/api/movies/${id}`)
+			.then(response => {
+				setMovie(response.data)
+			})
+			.catch(error => {
+				console.error(error)
+			})
+	}, [id])
 
-    const { title, director, metascore, stars } = this.state.movie;
-    return (
-      <div className="save-wrapper">
-        <div className="movie-card">
-          <h2>{title}</h2>
-          <div className="movie-director">
-            Director: <em>{director}</em>
-          </div>
-          <div className="movie-metascore">
-            Metascore: <strong>{metascore}</strong>
-          </div>
-          <h3>Actors</h3>
+	if (!movie) {
+		return <div>Loading movie information...</div>
+	}
 
-          {stars.map(star => (
-            <div key={star} className="movie-star">
-              {star}
-            </div>
-          ))}
-        </div>
-        <div className="save-button">Save</div>
-      </div>
-    );
-  }
+	return (
+		<div className='save-wrapper'>
+			<MovieCard movie={movie} />
+			<div className='save-button' onClick={() => saveMovie(movie)}>
+				Save
+			</div>
+			<div className='delete-button' onClick={() => deleteMovie(movie)}>
+				Delete
+			</div>
+		</div>
+	)
 }
+
+export default Movie
