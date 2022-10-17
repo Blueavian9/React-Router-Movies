@@ -18,7 +18,7 @@ const Movie = ({ savedList, setSavedList, addToSavedList }) => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/api/movies/${id}`)
+			.get(`http://localhost:5001/api/movies/${id}`)
 			.then(response => {
 				setMovie(response.data)
 			})
