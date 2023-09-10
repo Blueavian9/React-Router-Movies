@@ -37,7 +37,7 @@ export default MovieCard;
 //         Director: <em>{props.movie.director}</em>
 //       </div>
 //       <div className="movie-movie-card">
-//         Metascore: <strong>{props.movie.metascore}</strong>
+//         MovieCard.js: <strong>{props.movie.movie-card}</strong>
 //       </div>
 //       <h3>Actors</h3>
 
