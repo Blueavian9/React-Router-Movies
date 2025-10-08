@@ -13,6 +13,8 @@ const App = () => {
 
 		!exists.length && setSavedList([...savedList, newMovie])
 	}
+axios.get('/api/movies')           // not hardcoding the port
+axios.get(`/api/movies/${id}`)
 
 	return (
 		<div>
